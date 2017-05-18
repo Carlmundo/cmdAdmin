@@ -1,0 +1,41 @@
+[version]
+signature="$CHICAGO$"
+
+[cmdAdminInstall]
+CopyFiles = cmdAdmin.Files.Inf
+AddReg    = cmdAdmin.AddReg
+
+[DefaultInstall]
+CopyFiles = cmdAdmin.Files.Inf
+AddReg    = cmdAdmin.AddReg
+
+[DefaultUnInstall]
+DelFiles  = cmdAdmin.Files.Inf
+DelReg    = cmdAdmin.DelReg
+
+[SourceDisksNames]
+55="Run as Command Prompt Admin","",1
+
+[SourceDisksFiles]
+cmdAdmin.INF=55
+
+[DestinationDirs]
+cmdAdmin.Files.Inf = 17
+
+[cmdAdmin.Files.Inf]
+cmdAdmin.INF
+
+[cmdAdmin.AddReg]
+HKLM,%UninstallPath%,DisplayName,,"%cmdAdminName%"
+HKLM,%UninstallPath%,UninstallString,,"rundll32.exe syssetup.dll,SetupInfObjectInstallAction DefaultUninstall 132 %17%\cmdAdmin.inf"
+HKCR,*\Shell\runas,,,"%cmdAdminAccel%"
+HKCR,*\Shell\runas\command,,,"%11%\cmd.exe /c ""%1"""
+
+[cmdAdmin.DelReg]
+HKLM,%UninstallPath%
+HKCR,*\Shell\runas
+
+[Strings]
+cmdAdminName="Command Prompt Admin"
+cmdAdminAccel="Run as Command Prompt Admin"
+UninstallPath="Software\Microsoft\Windows\CurrentVersion\Uninstall\cmdAdmin"
